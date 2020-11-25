@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		.activated {}
+	</style>
+{% endblock %}
+
+{% block nav %}
+	{# <div> #}
+	{% include 'navbar/nav.html.twig' with { "nom_employe" : nom_employe , "estAuServiceFormation" : estAuServiceFormation , "id_employe": id_employe} only %}
+	{# </div> #}
+{% endblock %}
+
+{% block body %}
+	{# + mettre une variable #}
+	{% set vars = {'foo': 'bar'} %}
+	{# {% include 'template.html' with vars %} #}
+	<div class="mt-5  mx-auto d-flex flex-column ">
+		<form id="search-form" class="form-inline  mx-auto mb-4">
+			<input id="input_search" class="form-control mr-sm-2" type="search" placeholder="rechercher un produit" aria-label="Search">
+			<button id="submit" class="btn btn-outline-success my-2 my-sm-0" type="submit" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Rechercher</button>
+		</form>
+
+		<div class="recherche mx-auto">
+			<div class="collapse my-3" id="collapseExample">
+				<div class="alert alert-info" role="alert">
+					Pas de produit
+				</div>
+			</div>
+		</div>
+
+		{# md : min-width 768px medium screen
+						      mx margin left right  #}
+		<div class="d-flex flex-column flex-md-row justify-content-center">
+			<div class="links d-flex flex-column mx-5">
+				<p style="cursor:pointer;" class="mb-4 btn btn-outline-success" id="">Produits</p>
+				<p style="cursor:pointer;" class="btn btn-outline-success active mb-4" id="">Formations</p>
+				<p style="cursor:pointer;" class="btn btn-outline-success" id="">Inscriptions</p>
+			</div>
+
+			<div
+				class="produits flex-fill d-none">
+				{# {% include './home/lesProduits.html.twig' with lesProduits %} #}
+				{% include './home/lesProduits.html.twig' with {"lesProduits": lesProduits , "id_employe": id_employe , "nom_employe" : nom_employe , "estAuServiceFormation" : estAuServiceFormation} only%}
+			</div>
+
+			<div class="formations flex-fill">
+				{% include './home/lesFormations.html.twig' with { "id_employe": id_employe , "nom_employe" : nom_employe , "estAuServiceFormation" : estAuServiceFormation , "lesFormations" : lesFormations , "lesInscriptions" : lesInscriptions} only%}
+			</div>
+
+			<div class="inscriptions flex-fill d-none">
+				{% include './home/lesInscriptions.html.twig' with { "id_employe": id_employe , "nom_employe" : nom_employe , "estAuServiceFormation" : estAuServiceFormation , "lesFormations" : lesFormations , "lesInscriptions" : lesInscriptions} only%}
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript %}
+	<script>
+		const form = document.getElementById('search-form');
+const links = document.querySelector('.links');
+const input = document.getElementById('input_search');
+const btn = document.getElementById('submit');
+const recherche_collapse = document.querySelector('#collapseExample')
+
+
+// input.addEventListener('change' , e => {
+// if(e.target.value){
+//     console.log(btn);
+//     btn.disabled = false;
+// }else{
+//     btn.disabled = true;
+// }
+// });
+const idEmploye = {{ id_employe }}
+function goToCreateFormation(produitID) { // window.location = "localhost/projetGsb/formulaire" + idEmploye + produitID
+window.open("http://localhost/projetGsb/formulaire" + "/" + idEmploye + "/" + produitID, '_blank')
+// window.history.replaceState({},, "localhost/projetGsb/formulaire" + idEmploye + produitID);
+}form.addEventListener('submit', async (e) => {
+e.preventDefault();
+if (input.value != "") {
+const res = await fetch (`/projetGsb/api/rechercheProduits/${
+input.value
+}`);
+const data = await res.json();
+
+console.log(data);
+
+if (data.length) {
+let divs = data.map(produit => `
+             <div style="cursor:pointer;" onclick="goToCreateFormation(${
+produit.id
+})" class="col mb-4 ">
+    <div class="card  bg-light mb-3">
+        <h5 class="card-header text-center">${
+produit ?. id
+}</h5>
+      <div class="card-body">
+        <p class="card-text">${
+produit ?. libelle
+}</p>
+      </div>
+    </div>
+  </div>
+          `)
+// recherche_collapse.innerHTML = /*html*/`
+// <div class="card card-body d-flex flex-row">
+//     <p class="mr-3">${data?.id}</p>
+//     <p>${data?.libelle}</p>
+// </div>
+// `
+
+html = `
+<div class="row row-cols-1 row-cols-md-2">
+	${
+divs.join('')
+}
+</div>
+`;
+
+recherche_collapse.innerHTML = html;
+
+} else {
+recherche_collapse.innerHTML = /*html*/
+`<div class="alert alert-info" role="alert">
+            Pas de produit
+          </div>`
+}
+
+setTimeout(() => {
+recherche_collapse.classList.remove('show')
+input.value = ""
+input.focus()
+}, 10000);
+
+
+Array.from(links.children).forEach((link, i) => {
+link.classList.remove('active');
+const name = link.innerText.trim().toLowerCase()
+const div = document.querySelector('.' + name);
+div.classList.add('d-none');
+})
+
+links.children[0].classList.add('active')
+
+const produits = document.querySelector('.produits')
+produits.classList.add('active')
+const name = e.target.innerText.trim().toLowerCase()
+const div = document.querySelector('.' + name);
+produits.classList.remove('d-none')
+
+} else {
+recherche_collapse.innerHTML = /*html*/
+`<div class="alert alert-info" role="alert">
+              Pas de produit
+          </div>`
+
+setTimeout(() => {
+recherche_collapse.classList.remove('show');
+
+}, 10000);
+}
+})
+
+Array.from(links.children).forEach((link, i) => {
+link.addEventListener('click', (e) => {
+Array.from(links.children).forEach(link => {
+link.classList.remove('active')
+const name = link.innerText.trim().toLowerCase()
+const div = document.querySelector('.' + name);
+div.classList.add('d-none');
+})
+e.target.classList.add('active')
+const name = e.target.innerText.trim().toLowerCase()
+const div = document.querySelector('.' + name);
+div.classList.remove('d-none')
+})
+})
+	</script>
+{% endblock %}

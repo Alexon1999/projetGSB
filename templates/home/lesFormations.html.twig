@@ -1,0 +1,121 @@
+<table class="table">
+	<thead class="thead-light">
+		<tr>
+			<th scope="col" class="text-center">#</th>
+			<th scope="col" class="text-center">NomProduit</th>
+			<th scope="col" class="text-center">Date de Début</th>
+			<th scope="col" class="text-center">Nb_heures</th>
+			<th scope="col" class="text-center">Département</th>
+			<th scope="col" class="text-center">
+				Action
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% set nb =  0 %}
+		{% for uneFormation in lesFormations %}
+			{# <div class="container mt-2 mb-2 d-flex  justify-content-around"> #}
+			{% set produit =  uneFormation.getProduit() %}
+			<tr>
+				<th scope="row" class="text-center">
+					{{uneFormation.id}}
+				</th>
+				<td class="text-center">
+					{{produit.libelle}}
+				</td>
+				<td class="text-center">
+					{{uneFormation.getDateDebut()|date("m/d/Y")}}
+				</td>
+				<td class="text-center">
+					{{uneFormation.nbreHeures}}
+				</td>
+				<td class="text-center">
+					{{uneFormation.departement}}
+				</td>
+
+				{% if estAuServiceFormation %}
+					<td class="text-center">
+						<div class="d-flex">
+							<a class="dropdown-item" href="{{path('modifier_formation' , {id : uneFormation.id})}}">
+								<i class="fas fa-edit"></i>
+							</a>
+
+							{% set nb = nb + 1 %}
+
+
+							{% set nb_inscriptions = 0 %}
+
+							{% for uneInscription in lesInscriptions %}
+								{% if uneInscription.formation.id == uneFormation.id %}
+									{% set nb_inscriptions = nb_inscriptions + 1 %}
+								{% endif %}
+							{% endfor %}
+
+							{# {{nb_inscriptions}} #}
+							{# + s'il y a pas d'inscription #}
+							{% if not nb_inscriptions %}
+								<a href="{{path('supprimer_formation' , {id : uneFormation.id})}}" class="dropdown-item text-danger">
+									<i class="fas fa-trash-alt"></i>
+								</a>
+							{% else %}
+								{# {{nb_inscriptions}} #}
+
+								<!-- Button trigger modal -->
+									<a id="open_modal" class=" dropdown-item  text-info " data-toggle="modal" data-target="#exampleModal{{nb}}" class="dropdown-item text-info"> <i class="fas fa-list"></i>
+								</a>
+
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModal{{nb}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">Info</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<p>il y a
+													<span class="font-weight-bold badge badge-danger">
+														{{nb_inscriptions}}
+														inscriptions
+													</span>
+													pour cette formations donc vous ne pouvez pas la supprimer</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer
+												</button>
+												{# <button type="button" class="btn btn-primary">Save changes</button> #}
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						</div>
+					</td>
+				</div>
+			</tr>
+		</td>
+	{% else %}
+		<td class="text-center">
+			{% set estDejaInscrit = false %}
+
+			{% for uneInscription in lesInscriptions %}
+				{% if uneInscription.employe.id == id_employe and uneInscription.formation.id == uneFormation.id%}
+					{% set estDejaInscrit = true %}
+				{% endif %}
+			{% endfor %}
+
+			{% if estDejaInscrit %}
+				<p class="text-success">
+					<i class="fas fa-check"></i>
+					Déjà inscrit</p>
+			{% else %}
+				<a href="{{path('inscription' , {id_employe: id_employe , id_formation:uneFormation.id})}}">
+					<i class="fas fa-plus mr-2"></i>Inscrire</a>
+			{% endif %}
+
+		</td>
+	{% endif %}
+</tr>
+{# </div> #}{% endfor %}</tbody></table>

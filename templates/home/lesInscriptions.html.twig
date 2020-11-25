@@ -1,0 +1,96 @@
+<table class="table">
+	<thead class="thead-light">
+		<tr>
+			<th scope="col" class="text-center">#</th>
+			<th scope="col" class="text-center">NomProduit</th>
+			<th scope="col" class="text-center">Date de Début</th>
+			<th scope="col" class="text-center">Etat</th>
+			{% if estAuServiceFormation %}
+				<th scope="col" class="text-center">Actions</th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+
+		{% for uneInscription in lesInscriptions %}
+			{% if not estAuServiceFormation %}
+				{# {% if estAuServiceFormation == false %} #}
+
+				{% if uneInscription.employe.id == id_employe %}
+					<tr>
+
+						<th scope="row" class="text-center">
+							{{uneInscription.id}}
+
+						</th>
+						<td class="text-center">
+							{{uneInscription.formation.produit.libelle}}
+						</td>
+						<td class="text-center">
+							{{uneInscription.formation.dateDebut|date("m/d/Y")}}
+						</td>
+						<td class="text-center">
+							{% set statut = uneInscription.statut %}
+							{% if statut == "V" %}
+								<i class="fas fa-user-check text-success"></i>
+							{% elseif  statut == "R" %}
+								<i class="fas fa-user-times text-danger"></i>
+							{% else %}
+								<i class="fas fa-spinner text-info"></i>
+							{% endif %}
+						</td>
+
+					</tr>
+				{% endif %}
+
+			{% else %}
+				{% if uneInscription.statut == "E" %}
+					<tr>
+						<th scope="row" class="text-center">
+							{{uneInscription.id}}
+
+						</th>
+						<td class="text-center">
+							{{uneInscription.formation.produit.libelle}}
+						</td>
+						<td class="text-center">
+							{{uneInscription.formation.dateDebut|date("m/d/Y")}}
+						</td>
+						<td class="text-center">
+							<i class="fas fa-spinner text-success"></i>
+							En cours
+
+						</td>
+						<td class="text-center d-flex justify-content-around">
+							<a href="{{path('inscription_valide' , {id :uneInscription.id})}}">
+								<i class="fas fa-check text-success"></i>
+							</a>
+							<a href="{{path('inscription_refuse' , {id :uneInscription.id})}}">
+								<i class="fas fa-times text-danger"></i>
+							</a>
+						</td>
+
+					</tr>
+				{% endif %}
+			{% endif %}
+
+		{% endfor %}
+
+	</tbody>
+</table>
+
+{# sm : small screen #}
+<div class="d-flex flex-md-row flex-column justify-content-md-center align-items-sm-center">
+	<p class="px-3 text-success border-right">
+		<i class="fas fa-user-check "></i>
+		Validé
+	</p>
+	<p class="px-3 text-danger border-right">
+		<i class="fas fa-user-times"></i>
+		Refusé
+	</p>
+	<p class="px-3 text-info">
+		<i class="fas fa-spinner"></i>
+		En cours
+	</p>
+</div>

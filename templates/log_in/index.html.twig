@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	<style>
+		button#login_connecter,
+		.btn {
+			display: block;
+			margin: auto;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	{# <form method="post" action="/projetGsb/user">																								<label for="lbl_login">																												        login : 																												        </label>														            <input type="text" name="login">																														        <br>																						        <label for="lbl_mdp">																									        mot de passe : 																												        </label>															            <input type="text" name="mdp">														        <button type="submit">login</button>																									    </form> #}
+	{# {{form(form)}} #}
+	{# <div class="container mx-auto my-5 d-flex justify-content-center"> #}
+		<div class="d-flex flex-column justify-content-center align-items-center"> <img
+		class="d-block mx-auto my-5" style="width:150px;" src="/projetGsb/logo.jpg" alt="">
+		{# </div> #}
+
+		{% include "form/index.html.twig" with {"form" : form} %}
+
+		<a href="" class="btn btn-outline-secondary">Créer un nouveau compte
+		</a>
+	</div>
+
+{% endblock %}

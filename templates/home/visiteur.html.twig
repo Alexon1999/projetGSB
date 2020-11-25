@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block nav %}
+  <div>
+    {% include 'navbar/nav.html.twig' with { "nom_employe" : nom_employe} only %}
+  </div>
+{% endblock %}
+
+
+{% block body %}
+  {% for unProduit in lesProduits %}
+			<div style="display:flex;width:600px;">
+				<p>{{unProduit.id}}</p>
+				<p>{{unProduit.libelle}}</p>
+			</div>
+		{% endfor %}
+
+
+
+{% endblock %}

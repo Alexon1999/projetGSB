@@ -1,0 +1,36 @@
+<table class="table">
+	<thead class="thead-light">
+		<tr>
+			<th scope="col" class="text-center">#</th>
+			<th scope="col" class="text-center">Nom</th>
+			{% if estAuServiceFormation %}
+				<th scope="col" class="text-center">Action</th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+
+		{% for unProduit in lesProduits %}
+			{# <div class="container mt-2 mb-2 d-flex  justify-content-around"> #}
+			<tr>
+				<th scope="row" class="text-center">
+					{{unProduit.id}}
+
+				</th>
+				<td class="text-center">
+					{{unProduit.libelle}}
+
+				</td>
+				{% if estAuServiceFormation %}
+					<td class="text-center">
+						<a href="{{path('aff_formFormationProduit' , {employe_id: id_employe , produit_id:unProduit.id})}}">
+							<i class="fas fa-plus mr-2"></i>
+							Créer une formation</a>
+					</td>
+				{% endif %}
+			</tr>
+			{# </div> #}
+		{% endfor %}
+
+	</tbody>
+</table>

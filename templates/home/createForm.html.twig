@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center my-2 text-info">{{action}}</h1>
+		{% include "form/index.html.twig" with {"form" : form} %}
+	</div>
+{% endblock %}
