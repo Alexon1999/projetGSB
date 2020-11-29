@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	<style>
+		button#login_connecter,
+		.btn {
+			display: block;
+			margin: auto;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<div class="d-flex flex-column justify-content-center align-items-center">
+		<img class="d-block mx-auto my-5" style="width:150px;" src="/projetGsb/logo.jpg" alt="">
+
+		<div class="container mx-auto w-50 p-3">
+			<form id="createEmployeForm">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Nom</label>
+					<input type="nom" class="form-control" id="nom" name="nom" aria-describedby="nomHelp">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Prenom</label>
+					<input type="prenom" class="form-control" id="prenom" name="prenom" aria-describedby="prenomHelp">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Email address</label>
+					<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Mot de Passe</label>
+					<input type="password" id="mdp" class="form-control" name="mdp" id="exampleInputPassword1">
+				</div>
+				<div class="form-group form-check">
+					<input type="checkbox" class="form-check-input" id="statut" name="statut">
+					<label class="form-check-label" for="exampleCheck1">statut : employe</label>
+				</div>
+				<button type="submit" class="btn btn-primary">Créer</button>
+
+			</form>
+			<a href="{{path('index')}}" class="btn btn-outline-secondary">Retour
+			</a>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+	<script>
+		const form = document.getElementById("createEmployeForm")
+const mdp = document.getElementById("mdp")
+const email = document.getElementById("email")
+const statut = document.getElementById("statut")
+const nom = document.getElementById("nom")
+const prenom = document.getElementById("prenom")
+
+form.addEventListener("submit", async (e) => {
+e.preventDefault();
+
+// console.dir(statut)
+
+const dataForm = {
+"login": email.value,
+"mdp": mdp.value,
+"nom": nom.value,
+"prenom": prenom.value,
+"statut": statut.value == "on" ? 1 : 0
+}
+
+// console.log("Output ~ file: create.html.twig ~ line 52 ~ form.addEventListener ~ formdata", formdata)
+
+const res = await fetch("/projetGsb/api/createNewEmploye", {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+body: JSON.stringify(dataForm)
+});
+
+const data = await res.json();
+
+console.log(data);
+// window.open("http://localhost/projetGsb/", '_blank');
+window.location = "http://localhost/projetGsb/";
+
+})
+	</script>
+
+{% endblock %}

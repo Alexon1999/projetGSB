@@ -56,8 +56,8 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $employe = $this->getDoctrine()->getRepository(Employe::class)->find($id);
-
+        // $employe = $this->getDoctrine()->getRepository(Employe::class)->find($id);
+        $employe = $session->get('user');
 
         $lesFormations = $this->getDoctrine()->getRepository(Formation::class)->findAll();
 

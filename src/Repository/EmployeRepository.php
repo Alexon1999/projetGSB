@@ -36,6 +36,15 @@ class EmployeRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findByLoginAndMdp($login, $mdp): ?Employe
+    {
+        return $this->createQueryBuilder('employe')
+            ->setParameter('login', $login)
+            ->setParameter('mdp', $mdp)
+            ->where('employe.login = :login AND employe.mdp = :mdp')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
 
 

@@ -126,12 +126,12 @@ class FormationController extends AbstractController
     /**
      * @Route("/inscription/{id_formation}/{id_employe}" ,name="inscription")
      */
-    public function inscrireFormation($id_formation, $id_employe)
+    public function inscrireFormation(SessionInterface $session, $id_formation, $id_employe)
     {
         $employe = $this->getDoctrine()->getRepository(Employe::class)->find($id_employe);
+        // $employe = $session->get('user');
 
         // $estVisiteur = $employe->getStatut() == 0;
-
 
         $formation = $this->getDoctrine()->getRepository(Formation::class)->find($id_formation);
 
