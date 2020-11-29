@@ -34,7 +34,7 @@
 		</div>
 
 		{# md : min-width 768px medium screen
-						      mx margin left right  #}
+								      mx margin left right  #}
 		<div class="d-flex flex-column flex-md-row justify-content-center">
 			<div class="links d-flex flex-column mx-5">
 				<p style="cursor:pointer;" class="mb-4 btn btn-outline-success" id="">Produits</p>
@@ -78,8 +78,9 @@ const recherche_collapse = document.querySelector('#collapseExample')
 // }
 // });
 const idEmploye = {{ id_employe }}
-function goToCreateFormation(produitID) { // window.location = "localhost/projetGsb/formulaire" + idEmploye + produitID
-window.open("http://localhost/projetGsb/formulaire" + "/" + idEmploye + "/" + produitID, '_blank')
+function goToCreateFormation(produitID) {
+window.location = "http://localhost/projetGsb/formulaire" + "/" + idEmploye + "/" + produitID
+// window.open("http://localhost/projetGsb/formulaire" + "/" + idEmploye + "/" + produitID, '_blank')
 // window.history.replaceState({},, "localhost/projetGsb/formulaire" + idEmploye + produitID);
 }form.addEventListener('submit', async (e) => {
 e.preventDefault();
