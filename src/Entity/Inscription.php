@@ -22,6 +22,11 @@ class Inscription
      */
     private $statut;
 
+     /**
+     * @ORM\Column(type="date" , nullable=true)
+     */
+    private $dateExamen;
+
     /** 
      * @ORM\ManyToOne(targetEntity="Employe")
      *@ORM\JoinColumn()
@@ -72,6 +77,30 @@ class Inscription
     public function setFormation(?Formation $formation): self
     {
         $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(?\DateTimeInterface $dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    public function getDateExamen(): ?\DateTimeInterface
+    {
+        return $this->dateExamen;
+    }
+
+    public function setDateExamen(?\DateTimeInterface $dateExamen): self
+    {
+        $this->dateExamen = $dateExamen;
 
         return $this;
     }

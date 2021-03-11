@@ -46,6 +46,13 @@ class EmployeRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findAllEmployesService()
+    {
+        return $this->createQueryBuilder('employe')
+            ->where('employe.statut = 1')
+            ->getQuery()
+            ->getResult();
+    }
 
 
     /*

@@ -18,7 +18,7 @@ class FormationController extends AbstractController
     /**
      * @Route("/formFormation/{id_employe}", name="aff_formFormation")
      */
-    public function createFormation(Request $request, SessionInterface $session, $id_employe)
+    public function createFormation(Request $request, SessionInterface $session, $id_employe )
     {
         $session_user_id = $session->get('user_id');
 

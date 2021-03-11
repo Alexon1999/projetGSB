@@ -36,11 +36,13 @@
 					<input type="checkbox" class="form-check-input" id="statut" name="statut">
 					<label class="form-check-label" for="exampleCheck1">statut : employe</label>
 				</div>
-				<button type="submit" class="btn btn-primary">Créer</button>
+				<button type="submit" class="btn btn-primary btn-lg">Créer</button>
 
 			</form>
-			<a href="{{path('index')}}" class="btn btn-outline-secondary">Retour
-			</a>
+			<div class="d-flex justify-content-center my-2">
+				<a href="{{path('index')}}" class="btn btn-secondary btn-sm mx-auto">Retour
+				</a>
+			</div>
 		</div>
 	</div>
 
@@ -48,44 +50,44 @@
 {% endblock %}
 
 {% block javascript %}
-	<script>
-		const form = document.getElementById("createEmployeForm")
-const mdp = document.getElementById("mdp")
-const email = document.getElementById("email")
-const statut = document.getElementById("statut")
-const nom = document.getElementById("nom")
-const prenom = document.getElementById("prenom")
+<script >
+	const form = document.getElementById("createEmployeForm")
+	const mdp = document.getElementById("mdp")
+	const email = document.getElementById("email")
+	const statut = document.getElementById("statut")
+	const nom = document.getElementById("nom")
+	const prenom = document.getElementById("prenom")
 
-form.addEventListener("submit", async (e) => {
-e.preventDefault();
+	form.addEventListener("submit", async (e) => {
+		e.preventDefault();
 
-// console.dir(statut)
+		// console.dir(statut)
 
-const dataForm = {
-"login": email.value,
-"mdp": mdp.value,
-"nom": nom.value,
-"prenom": prenom.value,
-"statut": statut.checked ? 1 : 0
-}
+		const dataForm = {
+			login: email.value,
+			mdp: mdp.value,
+			nom: nom.value,
+			prenom: prenom.value,
+			statut: statut.checked ? 1 : 0
+		}
 
-// console.log("Output ~ file: create.html.twig ~ line 52 ~ form.addEventListener ~ formdata", formdata)
+		// console.log("Output ~ file: create.html.twig ~ line 52 ~ form.addEventListener ~ formdata", formdata)
 
-const res = await fetch("/projetGsb/api/createNewEmploye", {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json'
-},
-body: JSON.stringify(dataForm)
-});
+		const res = await fetch("/projetGsb/api/createNewEmploye", {
+			method: 'POST',
+			headers: {
+			'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(dataForm)
+		});
 
-const data = await res.json();
+		const data = await res.json();
 
-console.log(data);
-// window.open("http://localhost/projetGsb/", '_blank');
-window.location = "http://localhost/projetGsb/";
+		console.log(data);
+		// window.open("http://localhost/projetGsb/", '_blank');
+		window.location = "http://localhost/projetGsb/";
 
-})
-	</script>
+	})
+</script>
 
 {% endblock %}

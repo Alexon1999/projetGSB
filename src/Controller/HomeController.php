@@ -92,4 +92,17 @@ class HomeController extends AbstractController
         //         ]);
         // }
     }
+
+    // Castaing
+      /**
+     * @Route("/employesServices", name="employesServices")
+     */
+    public function AffemployesServices()
+    {
+        $employes_Services = $this->getDoctrine()->getRepository(Employe::class)->findAllEmployesService();
+
+        return $this->render('lesEmployesFormation.html.twig' , [
+            "lesEmployes" => $employes_Services
+        ]);
+    }
 }

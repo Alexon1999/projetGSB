@@ -18,7 +18,7 @@ class Formation
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date" , nullable=true)
      */
     private $dateDebut;
 
@@ -33,7 +33,7 @@ class Formation
     private $departement;
 
     // + onDelete CASCADE : quand j'efface le produit , la formation sera effacé aussi
-    // + onDelete SET NULL : quand j'efface un produit , la formation produit_id sera null
+    // + onDelete = "SET NULL" : quand j'efface un produit , dans la formation  produit_id sera null
     /** 
      * @ORM\ManyToOne(targetEntity="Produit")
      * @ORM\JoinColumn(onDelete="CASCADE")

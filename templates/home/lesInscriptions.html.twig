@@ -4,10 +4,13 @@
 			<th scope="col" class="text-center">#</th>
 			<th scope="col" class="text-center">NomProduit</th>
 			<th scope="col" class="text-center">Date de Début</th>
+			<th scope="col" class="text-center">Date Examen</th>
 			<th scope="col" class="text-center">Etat</th>
 			{% if estAuServiceFormation %}
 				<th scope="col" class="text-center">Actions</th>
 			{% endif %}
+
+			
 		</tr>
 	</thead>
 	<tbody>
@@ -29,6 +32,15 @@
 						<td class="text-center">
 							{{uneInscription.formation.dateDebut|date("m/d/Y")}}
 						</td>
+						{# castaing #}
+						<td class="text-center">
+							{% if uneInscription.dateExamen %}
+							{{uneInscription.dateExamen|date("m/d/Y")}}
+							{% else %}
+								pas de résultat
+							{% endif %}
+						</td>
+
 						<td class="text-center">
 							{% set statut = uneInscription.statut %}
 							{% if statut == "V" %}

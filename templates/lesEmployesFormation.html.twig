@@ -1,0 +1,8 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+  {% for employe in lesEmployes %}
+    <p>{{employe.id}} - {{employe.nom}}</p>
+  {% endfor %}
+{% endblock %}
