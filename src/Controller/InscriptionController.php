@@ -17,8 +17,9 @@ class InscriptionController extends AbstractController
 
         $inscription->setStatut("V");
 
-        $date = new \DateTime();
-        $inscription->setDateExamen($date);
+        // Castaing
+        // $date = new \DateTime();
+        // $inscription->setDateExamen($date);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($inscription);

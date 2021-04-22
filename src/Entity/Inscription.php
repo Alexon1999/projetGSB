@@ -22,10 +22,10 @@ class Inscription
      */
     private $statut;
 
-     /**
-     * @ORM\Column(type="date" , nullable=true)
-     */
-    private $dateExamen;
+    //  /**
+    //  * @ORM\Column(type="date" , nullable=true)
+    //  */
+    // private $dateExamen;
 
     /** 
      * @ORM\ManyToOne(targetEntity="Employe")
@@ -93,15 +93,15 @@ class Inscription
         return $this;
     }
 
-    public function getDateExamen(): ?\DateTimeInterface
-    {
-        return $this->dateExamen;
-    }
+    // public function getDateExamen(): ?\DateTimeInterface
+    // {
+    //     return $this->dateExamen;
+    // }
 
-    public function setDateExamen(?\DateTimeInterface $dateExamen): self
-    {
-        $this->dateExamen = $dateExamen;
+    // public function setDateExamen(?\DateTimeInterface $dateExamen): self
+    // {
+    //     $this->dateExamen = $dateExamen;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
