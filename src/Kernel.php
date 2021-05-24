@@ -35,12 +35,4 @@ class Kernel extends BaseKernel
             (require $path)($routes->withPath($path), $this);
         }
     }
-
-    // public function registerBundles()
-    // {
-    //     $bundles = array(
-    //         // ...
-    //         new CMEN\GoogleChartsBundle\CMENGoogleChartsBundle(),
-    //     );
-    // }
 }

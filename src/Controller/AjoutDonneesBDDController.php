@@ -8,6 +8,7 @@ use App\Entity\Produit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class AjoutDonneesBDDController extends AbstractController
 {
@@ -28,7 +29,7 @@ class AjoutDonneesBDDController extends AbstractController
     /**
      * @Route("/ajoutProduits", name="ajout_produit")
      */
-    public function ajoutProduit()
+    public function ajoutProduit(SerializerInterface $serializer)
     {
 
         $leProduit = new Produit();
@@ -38,8 +39,12 @@ class AjoutDonneesBDDController extends AbstractController
         // $em->persist($leProduit);
         // $em->flush();
 
-        return new Response('Saved new product : '.$leProduit->getId(). " ". $leProduit->getLibelle());
+        // return new Response('Saved new product : '.$leProduit->getId(). " ". $leProduit->getLibelle());
         // return $this->json($leProduit);
+
+        $jsonContent = $serializer->serialize($leProduit, 'json');
+        return new Response($jsonContent , 200);
+
     }
 
     /**
