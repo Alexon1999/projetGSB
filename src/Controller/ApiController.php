@@ -37,13 +37,25 @@ class ApiController extends AbstractController
     public function createNewEmploye(Request $request, SerializerInterface $serializer,  EntityManagerInterface $em)
     {
         $jsonrecu = $request->getContent();
-        $employe = $serializer->deserialize($jsonrecu, Employe::class, 'json');
+        // $employe = $serializer->deserialize($jsonrecu, Employe::class, 'json');
 
-        $em->persist($employe);
-        $em->flush();
+        // $em->persist($employe);
+        // $em->flush();
 
-        return $this->json($employe, 200);
+        // return $this->json($employe, 200);
+        $data = json_decode($jsonrecu); # json_decode return 
+        dd( gettype($data) , $data , $data->name, $data->categeories , gettype($data->categeories));
+    }
 
-        // dd($employe);
+    /**
+     * @Route("/api/test" , name="test_api") , methods={"POST"}
+     */
+    public function test_api(Request $request, SerializerInterface $serializer,  EntityManagerInterface $em)
+    {
+        $jsonrecu = $request->getContent();
+        
+        $data = json_decode($jsonrecu); # json_decode return  object
+        // json_encode -> return Json string
+        dd( gettype($data) , $data , $data->name, $data->categeories , gettype($data->categeories));
     }
 }
