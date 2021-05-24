@@ -7,6 +7,7 @@ use App\Entity\Formation;
 use App\Entity\Produit;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class AjoutDonneesBDDController extends AbstractController
 {
@@ -31,11 +32,14 @@ class AjoutDonneesBDDController extends AbstractController
     {
 
         $leProduit = new Produit();
-        $leProduit->setLibelle("lunettes");
+        $leProduit->setLibelle("PARACETAMOL");
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($leProduit);
-        $em->flush();
+        // $em = $this->getDoctrine()->getManager();
+        // $em->persist($leProduit);
+        // $em->flush();
+
+        return new Response('Saved new product : '.$leProduit->getId(). " ". $leProduit->getLibelle());
+        // return $this->json($leProduit);
     }
 
     /**
