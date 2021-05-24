@@ -15,12 +15,25 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ApiController extends AbstractController
 {
     /**
+     * @Route("/api/test" , name="test_api") , methods={"POST"}
+     */
+    public function test_api(Request $request, SerializerInterface $serializer,  EntityManagerInterface $em)
+    {
+        $jsonrecu = $request->getContent();
+        
+        $data = json_decode($jsonrecu); # json_decode return  object
+        // json_encode -> return Json string
+        dd( gettype($data) , $data , $data->name, $data->categeories , gettype($data->categeories));
+    }
+    
+    /**
      * @Route("/api/rechercheProduits/{produit}" , name="recherche_produits", methods={"GET"})
      * @param $produit
      * @param Request $request
      */
     public function rechercheProduits($produit, ProduitRepository $pr)
     {
+
         // $lesProduits =  $this->getDoctrine()->getRepository(Produit::class)->findProduitsByNom($produit);
         $lesProduits =  $pr->findProduitsByNom($produit);
         // dd($produit);
@@ -47,15 +60,4 @@ class ApiController extends AbstractController
         dd( gettype($data) , $data , $data->name, $data->categeories , gettype($data->categeories));
     }
 
-    /**
-     * @Route("/api/test" , name="test_api") , methods={"POST"}
-     */
-    public function test_api(Request $request, SerializerInterface $serializer,  EntityManagerInterface $em)
-    {
-        $jsonrecu = $request->getContent();
-        
-        $data = json_decode($jsonrecu); # json_decode return  object
-        // json_encode -> return Json string
-        dd( gettype($data) , $data , $data->name, $data->categeories , gettype($data->categeories));
-    }
 }
